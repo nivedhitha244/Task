@@ -1,0 +1,6 @@
+TASK-2
+Explain why equals() gives different results for Integer and Float.
+
+Autoboxing converts int to Integer and float to Float correctly.
+equals() method checks both value and type of objects.
+So Integer.equals(Integer) gives true, but Float.equals(Integer) gives false due to type mismatch.
