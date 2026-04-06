@@ -1,16 +1,18 @@
 package com.auction.entities;
 
 public class Buyer extends User {
-    private double walletBalance;
+    double balance;
 
-    public Buyer(String userId, String name, double balance) {
-        super(userId, name);
-        this.walletBalance = balance;
+    public Buyer(String id, String name, double balance) {
+        super(id, name);
+        this.balance = balance;
     }
 
-    public double getWalletBalance() { return walletBalance; }
+    public double getBalance() {
+        return balance;
+    }
 
-    public void deductAmount(double amount) {
-        this.walletBalance -= amount;
+    public void pay(double amount) {
+        balance -= amount;
     }
 }

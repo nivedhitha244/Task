@@ -6,41 +6,38 @@ import com.auction.exceptions.InvalidBidException;
 
 public class AuctionService {
 
-    private Buyer highestBidder;
+    Buyer topBuyer;
 
-    public void processBid(Buyer buyer, ElectronicItem item, double bidAmount) throws InvalidBidException {
+    public void bid(Buyer b, ElectronicItem item, double amount) throws InvalidBidException {
 
-        if (!item.isAuctionActive()) {
-            throw new InvalidBidException("Auction is closed.");
+        if (!item.isActive()) {
+            throw new InvalidBidException("Auction already closed");
         }
 
-        if (bidAmount <= item.getCurrentPrice()) {
-            throw new InvalidBidException("Bid must be higher than $" + item.getCurrentPrice());
+        if (amount <= item.getPrice()) {
+            throw new InvalidBidException("Bid too low");
         }
 
-        if (buyer.getWalletBalance() < bidAmount) {
-            throw new InvalidBidException("Insufficient wallet balance.");
+        if (b.getBalance() < amount) {
+            throw new InvalidBidException("Not enough money");
         }
 
-        item.updatePrice(bidAmount);
-        highestBidder = buyer;
+        item.updatePrice(amount);
+        topBuyer = b;
 
-        System.out.println("Success: " + buyer.getName() + 
-                " bid $" + bidAmount + 
-                " on " + item.getItemDetails());
+        System.out.println(b.getName() + " placed $" + amount);
     }
 
-    public void closeAuction(ElectronicItem item) {
-        item.closeAuction();
+    public void end(ElectronicItem item) {
+        item.close();
+        System.out.println("\nAuction Ended\n");
+        System.out.println("\n***Auction Results***\n");
 
-        System.out.println("\n--- Auction Closed ---\n");
-
-        if (highestBidder != null) {
-            System.out.println("Winner: " + highestBidder.getName());
-            System.out.println("Winning Bid: $" + item.getCurrentPrice());
-            System.out.println();
+        if (topBuyer != null) {
+            System.out.println("Winner: " + topBuyer.getName());
+            System.out.println("Final Price: $" + item.getPrice());
         } else {
-            System.out.println("No bids placed.");
+            System.out.println("No one bid");
         }
     }
 }

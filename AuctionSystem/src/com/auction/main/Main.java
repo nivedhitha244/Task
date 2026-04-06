@@ -8,32 +8,27 @@ import com.auction.exceptions.InvalidBidException;
 public class Main {
     public static void main(String[] args) {
 
-        AuctionService auctionService = new AuctionService();
+        AuctionService service = new AuctionService();
 
-        ElectronicItem laptop = new ElectronicItem("LPT-001", 500.00);
-        Buyer buyer1 = new Buyer("B1", "Alice", 1000.00);
-        Buyer buyer2 = new Buyer("B2", "Bob", 1200.00);
+        ElectronicItem item = new ElectronicItem("L1", 500);
+        Buyer b1 = new Buyer("1", "Alice", 1000);
+        Buyer b2 = new Buyer("2", "Bob", 1200);
 
-        System.out.println("\n--- Starting Online Auction ---\n");
+        System.out.println("Auction Start\n");
 
         try {
-            auctionService.processBid(buyer1, laptop, 1000.00);
+            service.bid(b1, item, 1000);
+            service.bid(b1, item, 550); // wrong bid
         } catch (InvalidBidException e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            auctionService.processBid(buyer1, laptop, 550.00);
-        } catch (InvalidBidException e) {
-            System.out.println("Caught Expected Error: " + e.getMessage());
-        }
-
-        try {
-            auctionService.processBid(buyer2, laptop, 1100.00);
+            service.bid(b2, item, 1100);
         } catch (InvalidBidException e) {
             System.out.println(e.getMessage());
         }
 
-        auctionService.closeAuction(laptop);
+        service.end(item);
     }
 }

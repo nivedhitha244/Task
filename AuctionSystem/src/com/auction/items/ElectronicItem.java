@@ -1,26 +1,35 @@
 package com.auction.items;
+
 import com.auction.core.Auctionable;
 
 public class ElectronicItem implements Auctionable {
-    private String itemID;
-    private double currentPrice;
-    private boolean isActive;
 
-    public ElectronicItem(String id, double startingPrice) {
-        this.itemID = id;
-        this.currentPrice = startingPrice;
-        this.isActive = true;
+    String id;
+    double price;
+    boolean active = true;
+
+    public ElectronicItem(String id, double price) {
+        this.id = id;
+        this.price = price;
     }
 
-    @Override
-    public void updatePrice(double newBid) { this.currentPrice = newBid; }
+    public void updatePrice(double price) {
+        this.price = price;
+    }
 
-    @Override
-    public boolean isAuctionActive() { return isActive; }
+    public boolean isActive() {
+        return active;
+    }
 
-    @Override
-    public String getItemDetails() { return "Electronics [ID: " + itemID + ", Price: $" + currentPrice + "]"; }
+    public String details() {
+        return "Item: " + id + " | Price: $" + price;
+    }
 
-    public double getCurrentPrice() { return currentPrice; }
-    public void closeAuction() { this.isActive = false; }
+    public double getPrice() {
+        return price;
+    }
+
+    public void close() {
+        active = false;
+    }
 }

@@ -1,13 +1,15 @@
 package com.auction.entities;
 
 public abstract class User {
-    private String userId;
-    private String name;
+    String id;
+    String name;
 
-    public User(String userId, String name) {
-        this.userId = userId;
+    public User(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 }
